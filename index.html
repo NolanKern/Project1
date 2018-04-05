@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <form>
-                        <input type="text" placeholder="YYYY" id="year-input">
+                        <input type="text" placeholder="YYYY" id="year-input" onblur="yearValidation(this.value,event)" onkeypress="yearValidation(this.value,event)">
                         <button type="submit" class="btn btn-default" id="run-search">Search</button>
                     </form>
                 </div>
