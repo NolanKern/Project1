@@ -1,90 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blast From the Past</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Exo+2|Fjalla+One" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Blast From the Past</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Exo+2|Fjalla+One" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    </head>
+ 
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h1 class="display-4">Blast From the Past</h1>
+                        <p class="lead">Catchy Sub-title here.</p>
+                        <hr class="my-4">
+                        <p>...And yet more info if we so choose</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <img src="assets/images/header-pic.png" id="header-img">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-</head>
-
-<body>
-    <div class="container">
-        <div class="jumbotron">
+        <div class="container">
             <div class="row">
-                <div class="col-lg-8">
-                    <h1 class="display-4">Blast From the Past</h1>
-                    <p class="lead">Catchy Sub-title here.</p>
-                    <hr class="my-4">
-                    <p>...And yet more info if we so choose</p>
-                </div>
-                <div class="col-lg-4">
-                    <img src="assets/images/header-pic.png" id="header-img">
+                <div class="col-lg-6">
+                    <form>
+                        <input type="text" placeholder="YYYY" id="year-input" onblur="yearValidation(this.value,event)" onkeypress="yearValidation(this.value,event)">
+                        <button type="submit" class="btn btn-default" id="run-search">Search</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Search.." name="search">
-                    <button type="submit">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card-deck">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/qvga" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Keywords</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/qvga" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Keywords.</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/qvga" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Keywords.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="container">
-        <div class="span4">
-            <div class="card card-primary">
-                <div class="card-header">Keyword Search Results</div>
-                <div class="card-body">
-                    <div class="card-height">
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row" id="results">
+
 
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
 
-</body>
+        <br>
+        <div class="container">
+            <div class="span4">
+                <div class="card card-primary">
+                    <div class="card-header">Keyword Search Results</div>
+                    <div class="card-body">
+                        <div class="card-height">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- jquery js -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Bootstrap js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- My js -->
+        <script src="assets/js/app.js"></script>
+    </body>
+ 
 
 </html>
