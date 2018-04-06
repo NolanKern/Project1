@@ -11,9 +11,7 @@ var searchAPI = {
         $.ajax({
           url: queryUrl,
           method: 'GET',
-        }).then(function(response){
-            console.log(response);
-            
+        }).then(function(response){ 
             searchAPI.drawResults(response);
         });
     },
@@ -24,8 +22,6 @@ var searchAPI = {
 
     drawResults: function(obj) {
         resp = obj.collection;
-        console.log(resp);
-
         var resultsDiv = $("#results");
         //resp.items.length
         for (var i = 0; i < 9; i++) {
@@ -54,8 +50,10 @@ var searchAPI = {
                 newP.addClass("card-text");
 
                 for (var j = 0; j < resp.items[i].data[0].keywords.length; j++) {
-                    var link = $("<a>");
-                    link.attr("href", "");
+                    var link = $("<span>");
+                    // link.attr("href", "");
+                    link.attr("value", resp.items[i].data[0].keywords[j]);
+                    link.attr('class',"spaceSearch");
                     link.text(resp.items[i].data[0].keywords[j]);
                     newP.append(link);
                     newP.append(" ");
@@ -67,13 +65,8 @@ var searchAPI = {
     
                 resultsDiv.append(newCol);
             }
-
-
         }
-
-
     }
-
 }
 
 $(document).on("click", "#run-search", function() {
@@ -110,3 +103,30 @@ function yearValidation(year,ev) {
           return true;
       } }
   }
+
+
+  $(document).on("click",".spaceSearch", function() {
+    console.log($(this).text());
+    var searchTerm = $(this).text();
+    $(".card-height").text("");
+    var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&format=json&callback=?"; 
+    $.ajax({
+        url: url,
+        type: 'GET',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        dataType: "json",
+      // plop data
+        success: function(data, status, jqXHR) {
+            console.log(data);
+            $(".card-height").html();
+            for(var i=0;i<data.length;i++){
+                if(data[3][i] && data[1][i] && data[2][i]){
+                    $(".card-height").prepend("<div><div class='well'><a href="+data[3][i]+"><h2>" + data[1][i]+ "</h2>" + "<p>" + data[2][i] + "</p></a></div></div>");
+            
+                }
+            }
+        }
+    })
+
+});
