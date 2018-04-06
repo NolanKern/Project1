@@ -4,7 +4,6 @@ var searchAPI = {
 
     searchNasa: function(y) {
         
-        //var queryUrl = "https://images-api.nasa.gov/search?q=" + qy + "&year_start=" + y + "&year_end=" + y;
         var queryUrl = "https://images-api.nasa.gov/search?year_start=" + y + "&year_end=" + y;
         console.log(queryUrl);
         
@@ -73,7 +72,7 @@ $(document).on("click", "#run-search", function() {
     event.preventDefault();
     
     var year = $("#year-input").val().trim();
-    
+    $("#results").text("");
     searchAPI.searchNasa(year);
     
 
@@ -106,9 +105,8 @@ function yearValidation(year,ev) {
 
 
   $(document).on("click",".spaceSearch", function() {
-    console.log($(this).val());
+    $(".container-fluid").show();
     var searchTerm = $(this).text();
-    console.log(searchTerm);
     $(".card-height").text("");
     var string = searchTerm;
     var res = string.split("(");
@@ -136,3 +134,7 @@ function yearValidation(year,ev) {
     })
 
 });
+
+$(document).on("click", "#close",function(){
+    $(".container-fluid").hide();
+})

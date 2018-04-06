@@ -19,8 +19,9 @@ body {
 
  
 .card-height {
-    height: 350px;
+    position: relative;;
     overflow-y: scroll;
+    height:150px;
 }
 
 #results .card {
@@ -31,4 +32,18 @@ body {
 .spaceSearch:hover{
     color:blue;
     text-decoration: underline;
+}
+
+.card-img-top{
+    overflow: hidden;
+}
+
+.container-fluid{
+    position:fixed;
+    bottom:0;
+    height:250px;
+}
+
+#close{
+    float: right;
 }
