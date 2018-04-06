@@ -44,6 +44,7 @@ var searchAPI = {
 
                 var title = $("<h5>");
                 title.text(resp.items[i].data[0].title);
+                title.attr('class',"spaceSearch");
                 bodyDiv.append(title);
 
                 var newP = $("<p>");
@@ -51,14 +52,13 @@ var searchAPI = {
 
                 for (var j = 0; j < resp.items[i].data[0].keywords.length; j++) {
                     var link = $("<span>");
-                    // link.attr("href", "");
                     link.attr("value", resp.items[i].data[0].keywords[j]);
                     link.attr('class',"spaceSearch");
                     link.text(resp.items[i].data[0].keywords[j]);
                     newP.append(link);
-                    newP.append(" ");
+                    newP.append(" | ");
                 }
-
+                newP.attr("value",title);
                 bodyDiv.append(newP);
                 cardDiv.append(bodyDiv);
                 newCol.append(cardDiv);
@@ -106,9 +106,16 @@ function yearValidation(year,ev) {
 
 
   $(document).on("click",".spaceSearch", function() {
-    console.log($(this).text());
+    console.log($(this).val());
     var searchTerm = $(this).text();
+    console.log(searchTerm);
     $(".card-height").text("");
+    var string = searchTerm;
+    var res = string.split("(");
+    if(res.length>1){
+        searchTerm= res[0];
+        console.log(searchTerm);
+    }
     var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&format=json&callback=?"; 
     $.ajax({
         url: url,
@@ -123,7 +130,6 @@ function yearValidation(year,ev) {
             for(var i=0;i<data.length;i++){
                 if(data[3][i] && data[1][i] && data[2][i]){
                     $(".card-height").prepend("<div><div class='well'><a href="+data[3][i]+"><h2>" + data[1][i]+ "</h2>" + "<p>" + data[2][i] + "</p></a></div></div>");
-            
                 }
             }
         }

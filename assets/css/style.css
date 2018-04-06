@@ -28,3 +28,7 @@ body {
     margin: 0px 5px 10px 0px;
 }
 
+.spaceSearch:hover{
+    color:blue;
+    text-decoration: underline;
+}
