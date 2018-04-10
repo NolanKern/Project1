@@ -1,42 +1,57 @@
-//Jumbotron Header "zooms in" as page is loaded
+
 $('.jumbotron').addClass('animated zoomIn');
 
 var searchAPI = {
-    results: 5,
     resp: "",
-
+    
+    // Method that handles the call to the NASA api
+    // Takes an argument for the year that the user would like to get results for
+    // Calls the drawResults method once the object is returned from the api
     searchNasa: function(y) {
-        
+        // Sets the user selected year to the start and end year parameters for the api
+        // This returns only images from that year
         var queryUrl = "https://images-api.nasa.gov/search?year_start=" + y + "&year_end=" + y;
-        console.log(queryUrl);
-        
+
         $.ajax({
           url: queryUrl,
           method: 'GET',
-        }).then(function(response){ 
+        }).then(function(response){
+            // Calling the drawResults method to display the results onto the page
             searchAPI.drawResults(response);
         });
     },
 
+    // Getter for the response object
     getResp: function() {
         return resp;
     },
 
+    // Method for drawing the results to the screen
     drawResults: function(obj) {
-        resp = obj.collection;
+        // Sets object key to response object
+        // Pointed into the collection array of the object to make calls easier
+        this.resp = obj.collection;
+
+        // Pointer to the div that will hold the results
         var resultsDiv = $("#results");
-        //resp.items.length
+
+        // For loop to iterate through the first 9 results
         for (var i = 0; i < 9; i++) {
-            if (!(resp.items[i].data[0].keywords === undefined)) {
+
+            // If statement checks that each results has keywords
+            if (this.resp.items[i].data[0].keywords !== undefined) {
                 
+                // Construction of the bootstrap Cards that will hold each result
+                // Using jquery pointers
                 var newCol = $("<div>");
                 newCol.addClass("col-4");
 
                 var cardDiv = $("<div>");
                 cardDiv.addClass("card");
 
+                // Image reference
                 var imgDiv = $("<img>");
-                imgDiv.attr("src", resp.items[i].links[0].href);
+                imgDiv.attr("src", this.resp.items[i].links[0].href);
                 imgDiv.addClass("card-img-top img-fluid");
 
                 cardDiv.append(imgDiv);
@@ -44,20 +59,25 @@ var searchAPI = {
                 var bodyDiv = $("<div>");
                 bodyDiv.addClass("card-body");
 
+                // Image title
                 var title = $("<h5>");
-                title.text(resp.items[i].data[0].title);
+                title.text(this.resp.items[i].data[0].title);
                 title.attr('class',"spaceSearch");
                 bodyDiv.append(title);
 
                 var newP = $("<p>");
                 newP.addClass("card-text");
 
-                for (var j = 0; j < resp.items[i].data[0].keywords.length; j++) {
+                // For loop to make each keyword into a separate link
+                // Each link will have a class added to help style them
+                for (var j = 0; j < this.resp.items[i].data[0].keywords.length; j++) {
                     var link = $("<span>");
+
                     link.attr("value", resp.items[i].data[0].keywords[j]);
                     link.attr('class',"spaceSearch");
                     link.attr('class', "hvr-underline-from-center");
                     link.text(resp.items[i].data[0].keywords[j]);
+
                     newP.append(link);
                     newP.append(" | ");
                 }
@@ -67,23 +87,30 @@ var searchAPI = {
                 newCol.append(cardDiv);
     
                 resultsDiv.append(newCol);
+
                 //Have cards "zoom in" as they appear on the screen
                 $('.card').addClass('animated zoomIn');
+
             }
         }
     }
 }
 
+// Event listener waiting for the search button to be clicked
 $(document).on("click", "#run-search", function() {
     event.preventDefault();
     
     var year = $("#year-input").val().trim();
+    // Empties the results div
     $("#results").text("");
+    // calls the search object with the users year
     searchAPI.searchNasa(year);
     
 
 });
 
+// This function is called as the user is inputting their year into the form
+// It validates the year to be numbers, 4 digits long, and between 1920 and now
 function yearValidation(year,ev) {
 
     var text = /^[0-9]+$/;
