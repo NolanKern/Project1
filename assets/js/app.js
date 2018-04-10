@@ -1,3 +1,6 @@
+//Jumbotron Header "zooms in" as page is loaded
+$('.jumbotron').addClass('animated zoomIn');
+
 var searchAPI = {
     results: 5,
     resp: "",
@@ -53,6 +56,7 @@ var searchAPI = {
                     var link = $("<span>");
                     link.attr("value", resp.items[i].data[0].keywords[j]);
                     link.attr('class',"spaceSearch");
+                    link.attr('class', "hvr-underline-from-center");
                     link.text(resp.items[i].data[0].keywords[j]);
                     newP.append(link);
                     newP.append(" | ");
@@ -63,6 +67,8 @@ var searchAPI = {
                 newCol.append(cardDiv);
     
                 resultsDiv.append(newCol);
+                //Have cards "zoom in" as they appear on the screen
+                $('.card').addClass('animated zoomIn');
             }
         }
     }
@@ -104,7 +110,7 @@ function yearValidation(year,ev) {
   }
 
 
-  $(document).on("click",".spaceSearch", function() {
+  $(document).on("click",".hvr-underline-from-center", function() {
     $(".container-fluid").show();
     var searchTerm = $(this).text();
     $(".card-height").text("");
