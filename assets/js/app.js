@@ -136,18 +136,25 @@ function yearValidation(year,ev) {
       } }
   }
 
-
+// when an underlined keyword is clicked initialize a function
   $(document).on("click",".hvr-underline-from-center", function() {
+    //   displays the search result panel
     $(".container-fluid").show();
+    // grabs the search term from what is clicked 
     var searchTerm = $(this).text();
+    // emptys the text within the wikipedia search results
     $(".card-height").text("");
+    // sets input to string and removes any parenthesis
     var string = searchTerm;
     var res = string.split("(");
+    // if there is a parenthesis remove anything after (
     if(res.length>1){
         searchTerm= res[0];
         console.log(searchTerm);
     }
+    // puts term into wikipedia search
     var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&format=json&callback=?"; 
+    // JSON call
     $.ajax({
         url: url,
         type: 'GET',
@@ -159,6 +166,7 @@ function yearValidation(year,ev) {
             console.log(data);
             $(".card-height").html();
             for(var i=0;i<data.length;i++){
+                // if there is a page description and link for a wiki page then it will display the web pages that the search result returns
                 if(data[3][i] && data[1][i] && data[2][i]){
                     $(".card-height").prepend("<div><div class='well'><a href="+data[3][i]+"><h2>" + data[1][i]+ "</h2>" + "<p>" + data[2][i] + "</p></a></div></div>");
                 }
@@ -167,7 +175,7 @@ function yearValidation(year,ev) {
     })
 
 });
-
+// allows user to close the wikipedia search div
 $(document).on("click", "#close",function(){
     $(".container-fluid").hide();
 })
