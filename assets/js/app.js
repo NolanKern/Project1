@@ -11,7 +11,7 @@ var searchAPI = {
         // Sets the user selected year to the start and end year parameters for the api
         // This returns only images from that year
         var queryUrl = "https://images-api.nasa.gov/search?year_start=" + y + "&year_end=" + y;
-
+        
         $.ajax({
           url: queryUrl,
           method: 'GET',
@@ -23,15 +23,15 @@ var searchAPI = {
 
     // Getter for the response object
     getResp: function() {
-        return resp;
+        // return searchAPI.resp;
     },
 
     // Method for drawing the results to the screen
     drawResults: function(obj) {
         // Sets object key to response object
         // Pointed into the collection array of the object to make calls easier
-        this.resp = obj.collection;
-
+        searchAPI.resp = obj.collection;
+        
         // Pointer to the div that will hold the results
         var resultsDiv = $("#results");
 
@@ -39,7 +39,7 @@ var searchAPI = {
         for (var i = 0; i < 9; i++) {
 
             // If statement checks that each results has keywords
-            if (this.resp.items[i].data[0].keywords !== undefined) {
+            if (searchAPI.resp.items[i].data[0].keywords !== undefined) {
                 
                 // Construction of the bootstrap Cards that will hold each result
                 // Using jquery pointers
@@ -51,7 +51,7 @@ var searchAPI = {
 
                 // Image reference
                 var imgDiv = $("<img>");
-                imgDiv.attr("src", this.resp.items[i].links[0].href);
+                imgDiv.attr("src", searchAPI.resp.items[i].links[0].href);
                 imgDiv.addClass("card-img-top img-fluid");
 
                 cardDiv.append(imgDiv);
@@ -61,22 +61,22 @@ var searchAPI = {
 
                 // Image title
                 var title = $("<h5>");
-                title.text(this.resp.items[i].data[0].title);
+                title.text(searchAPI.resp.items[i].data[0].title);
                 title.attr('class',"spaceSearch");
                 bodyDiv.append(title);
 
                 var newP = $("<p>");
                 newP.addClass("card-text");
-
+                
                 // For loop to make each keyword into a separate link
                 // Each link will have a class added to help style them
-                for (var j = 0; j < this.resp.items[i].data[0].keywords.length; j++) {
+                for (var j = 0; j < searchAPI.resp.items[i].data[0].keywords.length; j++) {
+                    
                     var link = $("<span>");
-
-                    link.attr("value", resp.items[i].data[0].keywords[j]);
+                    link.attr("value", searchAPI.resp.items[i].data[0].keywords[j]);
                     link.attr('class',"spaceSearch");
                     link.attr('class', "hvr-underline-from-center");
-                    link.text(resp.items[i].data[0].keywords[j]);
+                    link.text(searchAPI.resp.items[i].data[0].keywords[j]);
 
                     newP.append(link);
                     newP.append(" | ");
@@ -150,7 +150,6 @@ function yearValidation(year,ev) {
     // if there is a parenthesis remove anything after (
     if(res.length>1){
         searchTerm= res[0];
-        console.log(searchTerm);
     }
     // puts term into wikipedia search
     var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&format=json&callback=?"; 
@@ -163,7 +162,6 @@ function yearValidation(year,ev) {
         dataType: "json",
       // plop data
         success: function(data, status, jqXHR) {
-            console.log(data);
             $(".card-height").html();
             for(var i=0;i<data.length;i++){
                 // if there is a page description and link for a wiki page then it will display the web pages that the search result returns
