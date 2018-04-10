@@ -1,7 +1,6 @@
-//  Jumbotron header zooms in as loaded
-$(".jumbotron").addClass("animated zoomIn");
 
-// Object for interacting with the NASA api
+$('.jumbotron').addClass('animated zoomIn');
+
 var searchAPI = {
     resp: "",
     
@@ -73,10 +72,12 @@ var searchAPI = {
                 // Each link will have a class added to help style them
                 for (var j = 0; j < this.resp.items[i].data[0].keywords.length; j++) {
                     var link = $("<span>");
-                    link.attr("value", this.resp.items[i].data[0].keywords[j]);
-                    link.attr("class","spaceSearch");
-                    link.attr("class", "hvr-underline-from-center");
-                    link.text(this.resp.items[i].data[0].keywords[j]);
+
+                    link.attr("value", resp.items[i].data[0].keywords[j]);
+                    link.attr('class',"spaceSearch");
+                    link.attr('class', "hvr-underline-from-center");
+                    link.text(resp.items[i].data[0].keywords[j]);
+
                     newP.append(link);
                     newP.append(" | ");
                 }
@@ -87,8 +88,9 @@ var searchAPI = {
     
                 resultsDiv.append(newCol);
 
-                // cards zoom in as loaded
-                $(".card").addClass("animated zoomIn");
+                //Have cards "zoom in" as they appear on the screen
+                $('.card').addClass('animated zoomIn');
+
             }
         }
     }
@@ -135,7 +137,7 @@ function yearValidation(year,ev) {
   }
 
 
-  $(document).on("click",".spaceSearch", function() {
+  $(document).on("click",".hvr-underline-from-center", function() {
     $(".container-fluid").show();
     var searchTerm = $(this).text();
     $(".card-height").text("");
